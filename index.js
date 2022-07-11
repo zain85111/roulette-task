@@ -12,11 +12,15 @@ var ctx;
 
 var text = ""
 
+var mainIndex = 0;
+
 document.getElementById("spin").addEventListener("click", spin);
 
 document.getElementById("addBtn").addEventListener("click", addName);
 
 var bad = "";
+
+
 
 function addName() {
     var name = document.getElementById("name").value;
@@ -69,13 +73,20 @@ function printNames() {
 }
 
 function drawRouletteWheel() {
+
+    if (options.length < 1) {
+        $("#spin").css("display", "none");
+    } else {
+        $("#spin").css("display", "block");
+    }
+
     printNames()
     
     var canvas = document.getElementById("canvas");
     if (canvas.getContext) {
         var outsideRadius = 200;
-        var textRadius = 160;
-        var insideRadius = 125;
+        var textRadius = 120;
+        var insideRadius = 55;
 
         ctx = canvas.getContext("2d");
         ctx.clearRect(0,0,500,500);
@@ -83,11 +94,11 @@ function drawRouletteWheel() {
         ctx.strokeStyle = "black";
         ctx.lineWidth = 2;
 
-        ctx.font = 'bold 12px Helvetica, Arial';
+        ctx.font = '18px Helvetica, Arial';
 
         for(var i = 0; i < options.length; i++) {
             var angle = startAngle + i * arc;
-            //ctx.fillStyle = colors[i];
+            // ctx.fillStyle = colors[i];
             ctx.fillStyle = getColor(i, options.length);
 
             ctx.beginPath();
@@ -101,10 +112,10 @@ function drawRouletteWheel() {
             ctx.shadowOffsetY = -1;
             ctx.shadowBlur    = 0;
             ctx.shadowColor   = "rgb(220,220,220)";
-            ctx.fillStyle = "black";
+            ctx.fillStyle = "white";
             ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius, 
                             250 + Math.sin(angle + arc / 2) * textRadius);
-            ctx.rotate(angle + arc / 2 + Math.PI / 2);
+            ctx.rotate(angle + arc / 2 + Math.PI / 1);
             var text = options[i];
             ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
             ctx.restore();
@@ -184,16 +195,45 @@ function removeName(i) {
     drawRouletteWheel();
 }
 
+const start = () => {
+    setTimeout(function() {
+        confetti.start()
+    }, 500); 
+};
+
+
+const stop = () => {
+    setTimeout(function() {
+        confetti.stop()
+    }, 2500); 
+};
+
+
+function removeNameByBtn() {
+    removeName(mainIndex);
+    $("#exampleModal").modal('hide');
+}
+
+function openModal(name){
+    $("#exampleModal").modal('show');
+    $("#winner").empty();
+    $("#winner").append(`<p>${name}</p>`);
+    start();
+    stop();
+}
+
+
 function stopRotateWheel() {
     clearTimeout(spinTimeout);
     var index = getIndex();
-    console.log(index);
-    var text = "Out: "+options[index];
-    removeName(index);
+    mainIndex = index;
+    var text = options[index];
+    openModal(text)
+    // removeName(mainIndex);
     ctx.save();
-    ctx.font = 'bold 20px Helvetica, Arial';
-    ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
-    ctx.restore();
+    // ctx.font = 'bold 20px Helvetica, Arial';
+    // ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
+    // ctx.restore();
 }
 
 function easeOut(t, b, c, d) {

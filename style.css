@@ -3,6 +3,8 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
 }
 
 body{
@@ -10,17 +12,54 @@ body{
 }
 
 nav{
-    text-align: center;
-    background: black;
-    color: white;
-    padding: 10px 0;
+    min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    background: #3369e8;
+    padding: 0 24px ;
     margin-bottom: 20px;
+    color: white;
+    box-shadow: 0 2px 10px gray;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.btns{
+    height: 50px;
+}
+
+.button {
+    height: 100%;
+    background: transparent;
+    border: none;
+    padding: 0 12px;
+    cursor: pointer;
+    transition: ease-in-out .3s;
+    color: white;
+    outline: none;
+} 
+.buttonItems{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.selectOption{
+    color: black;
+}
+
+.button:hover{
+    background: #6994f8fd;
 }
 
 .main{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 52px;
 }
 
 .wheelSection{
@@ -31,32 +70,20 @@ nav{
     align-items: center;
 }
 
-.namesSection{
-    height: 90vh;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 0 20px;
+.contentSection{
+    height: 80vh;
+    width: 360px;
+    border: .5px solid gray;
 }
 
-.inputSection{
-    display: flex;
-    gap: 10px;
+.content{
+    padding: 12px;
 }
 
-.btn {
-    padding: 10px 30px;
-    background: transparent;
-    cursor: pointer;
-} 
-
-#name{
-    padding: 10px;
-}
-
-#namesList{
-    width: 100%;
+.namesList{
+    height: 50vh;
     border: 1px solid black;
-    line-height: 25px;
+    border-radius: 7px;
+    margin: 12px 0;
 }
+
